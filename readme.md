@@ -1,3 +1,0 @@
-
-
-#Trabalho do Projeto Integrador.
