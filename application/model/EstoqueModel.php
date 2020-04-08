@@ -1,5 +1,5 @@
 <?php
-    require '../utils/db.php'
+    require '../utils/db.php';
 
     class EstoqueModel {
         private $qtd_movimento_estoque;

@@ -15,7 +15,7 @@
             $link = $objBD->mysqlConnect();
 
             $query = $link->prepare('INSERT INTO Portifolio (id_portifolio, arquivo_portifolio, nome_portifolio) VALUES (?, ?);');
-            $query->bind_param("ss", $novoPonto->getArquivo(), $novoPonto->getNome()));
+            $query->bind_param("ss", $novoPonto->getArquivo(), $novoPonto->getNome());
             $runQuery = $query->execute();
 
             if($runQuery)

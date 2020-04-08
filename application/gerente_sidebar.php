@@ -1,6 +1,6 @@
 
             <div class="col-3 sidebar" id="sidebar">
-                <div class="row item-row">
+                <div class="row item-row"> <!-- adicionar classe 'selected' quando clicar -->
                     <div class="col-1"><i class="fas fa-boxes"></i></div>
                     <div class="col d-none d-md-inline-block"><span>Estoque</span></div>
                 </div>
