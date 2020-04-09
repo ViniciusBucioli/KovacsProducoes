@@ -72,6 +72,9 @@ CREATE TABLE Produto (
       categoria_produto TEXT (50) NOT NULL, 
       preco_custo_produto int NOT NULL, 
       descricao_produto TEXT (200) NOT NULL);
+insert into produto values (default, "Câmera Nikom 15200", "Camera", 1200, "Câmera Nikom com alta qualidade");
+insert into produto values (default, "Tripe", "Acessorios", 300, "Tripe para camera, altura máxima 2.5 m");
+insert into produto values (default, "Pano verde", "Estudio", 200, "Pano verde para o plano de fundo 5m x 5m");
 
 -- Table: Servico
 CREATE TABLE Servico (

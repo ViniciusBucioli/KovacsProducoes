@@ -1,15 +1,18 @@
 <?php
-    require_once '../model/ProdutoModel.php';
+    require_once '../../model/ProdutoModel.php';
 
-    $nome = $_POST['Nome'];
-    $categoria = $_POST['Categoria'];
+    //$nome = $_GET['Nome'];
+    //$categoria = $_GET['Categoria'];
+    $word = $_GET['word'];
 
     $respostaModel = ProdutoModel::selectAll();
     $respostaModel = ProdutoModel::selectByNome($nome);
     $respostaModel = ProdutoModel::selectByCategory($categoria);
 
-    if($respostaModel == false)
+    $searchResult = ProdutoModel::search($word);
+
+    if($searchResult == false)
         header('');
     else
-        echo $respostaModel;
+        echo $searchResult;
 ?>

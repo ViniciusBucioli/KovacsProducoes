@@ -1,5 +1,5 @@
 <?php
-    require '../utils/db.php';
+    require '../../utils/db.php';
 
     class ProdutoModel {
         private $nome;
@@ -18,11 +18,15 @@
         public function setDescricao($descricao) { $this->descricao = $descricao; }
         public function getDescricao() { return $this->descricao; }
 
-        public static function cadastrar($novoProduto) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+        private $objBD;
 
-            $query = $link->prepare('INSERT INTO Produto (nome_produto, categoria_produto, preco_custo_produto, descricao_produto) VALUES (?, ?, ?, ?);');
+        function __construct(){
+            $this->objDB = new db();
+        }
+        
+        public static function cadastrar($novoProduto) {
+
+            $query = $this->objDb->prepare('INSERT INTO Produto (nome_produto, categoria_produto, preco_custo_produto, descricao_produto) VALUES (?, ?, ?, ?);');
             $query->bind_param("sssss", $novoProduto->getNome(), $novoProduto->getCategoria(), $novoProduto->getPreco(), $novoProduto->getDescricao());
             $runQuery = $query->execute();
 
@@ -33,10 +37,8 @@
         }
         
         public static function selectAll() {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
 
-            $query = $link->prepare('SELECT * FROM Produto');
+            $query = $this->objDb->prepare('SELECT * FROM Produto');
             $runQuery = $query->execute();
 
             if ($runQuery) {
@@ -50,10 +52,8 @@
         }
         
         public static function selectByID($idProduto) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
 
-            $query = $link->prepare('SELECT * FROM Produto WHERE id_produto = ?;');
+            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE id_produto = ?;');
             $query->bind_param("s", $idProduto);
 
             $runQuery = $query->execute();
@@ -69,10 +69,8 @@
         }
         
         public static function selectByNome($nome) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
 
-            $query = $link->prepare('SELECT * FROM Produto WHERE nome_produto = ?;');
+            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE nome_produto = ?;');
             $query->bind_param("s", $nome);
 
             $runQuery = $query->execute();
@@ -88,11 +86,26 @@
         }
 
         public static function selectByCategory($categoria) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
 
-            $query = $link->prepare('SELECT * FROM Produto WHERE categoria_produto = ?;');
+            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE categoria_produto = ?;');
             $query->bind_param("s", $categoria);
+
+            $runQuery = $query->execute();
+
+            if ($runQuery) {
+                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
+                    $myArray[] = $row;
+
+                return json_encode($myArray);
+            } else {
+                return false;
+            }
+        }
+
+        public static function search($word) {
+
+            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE nome_produto like %?%;');
+            $query->bind_param("s", $word);
 
             $runQuery = $query->execute();
 

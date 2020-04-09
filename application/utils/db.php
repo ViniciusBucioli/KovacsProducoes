@@ -1,17 +1,22 @@
 <?php
 
-//Database credentials
-$host="localhost";
-$user="root";
-$password="";
-$db="kovacs_producoes";
+class db {
+    //Database credentials
+    private $host="localhost";
+    private $user="root";
+    private $password="";
+    private $db="kovacs_producoes";
 
-//Connection attemp
-$connection = mysqli_connect($host, $user, $password, $db);
+    //Connection attemp
+    public $connection;
 
-//Connection check
-if($connection === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
+    function __construct(){
+        $this->connection = new mysqli_connect($host, $user, $password, $db);
+        //Connection check
+        if ($this->connection->connect_error) {
+            die("ERROR: Could not connect. " . $conn->connect_error);
+        }
+    }
 }
 
 ?>

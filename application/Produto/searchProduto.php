@@ -1,10 +1,13 @@
 <div class="container mt-4">
-    <form>
+    <form action="./controller/produto/ProdutoControllerListar.php" method="get">
         <div class="form-row">
             <div class="col">
                 <div class="input-group">
-                    <div class="input-group-prepend"></div><input type="search" class="form-control" />
-                    <div class="input-group-append"><button class="btn btn-primary" type="button">Pesquisar</button></div>
+                    <div class="input-group-prepend"></div>
+                    <input type="search" class="form-control" name="word"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
                 </div>
             </div>
         </div>

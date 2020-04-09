@@ -16,6 +16,8 @@
     <div class="container-fluid">
         <div class="row">
             <?php include 'gerente_sidebar.php' ?>
+            <?php include 'Produto/searchProduto.php' ?>
+<!--             
             <div class="col card-groups">
                 <div class="row mb-4">
                     <div class="col">
@@ -56,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 <?php include 'footer.php' ?>
