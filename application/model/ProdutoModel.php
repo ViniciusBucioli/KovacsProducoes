@@ -18,15 +18,16 @@
         public function setDescricao($descricao) { $this->descricao = $descricao; }
         public function getDescricao() { return $this->descricao; }
 
-        private $objBD;
+        private $conn;
 
         function __construct(){
-            $this->objDB = new db();
+            $db = new db();
+            $this->conn = $db->connection;
         }
         
-        public static function cadastrar($novoProduto) {
+        public function cadastrar($novoProduto) {
 
-            $query = $this->objDb->prepare('INSERT INTO Produto (nome_produto, categoria_produto, preco_custo_produto, descricao_produto) VALUES (?, ?, ?, ?);');
+            $query = $this->conn->prepare('INSERT INTO Produto (nome_produto, categoria_produto, preco_custo_produto, descricao_produto) VALUES (?, ?, ?, ?);');
             $query->bind_param("sssss", $novoProduto->getNome(), $novoProduto->getCategoria(), $novoProduto->getPreco(), $novoProduto->getDescricao());
             $runQuery = $query->execute();
 
@@ -36,9 +37,9 @@
                 return false;
         }
         
-        public static function selectAll() {
+        public function selectAll() {
 
-            $query = $this->objDb->prepare('SELECT * FROM Produto');
+            $query = $this->conn->prepare('SELECT * FROM Produto');
             $runQuery = $query->execute();
 
             if ($runQuery) {
@@ -51,9 +52,9 @@
             }
         }
         
-        public static function selectByID($idProduto) {
+        public function selectByID($idProduto) {
 
-            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE id_produto = ?;');
+            $query = $this->conn->prepare('SELECT * FROM Produto WHERE id_produto = ?;');
             $query->bind_param("s", $idProduto);
 
             $runQuery = $query->execute();
@@ -68,9 +69,9 @@
             }
         }
         
-        public static function selectByNome($nome) {
+        public function selectByNome($nome) {
 
-            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE nome_produto = ?;');
+            $query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto = ?;');
             $query->bind_param("s", $nome);
 
             $runQuery = $query->execute();
@@ -85,9 +86,9 @@
             }
         }
 
-        public static function selectByCategory($categoria) {
+        public function selectByCategory($categoria) {
 
-            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE categoria_produto = ?;');
+            $query = $this->conn->prepare('SELECT * FROM Produto WHERE categoria_produto = ?;');
             $query->bind_param("s", $categoria);
 
             $runQuery = $query->execute();
@@ -102,21 +103,40 @@
             }
         }
 
-        public static function search($word) {
+        public function search($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $this->objDb->prepare('SELECT * FROM Produto WHERE nome_produto like %?%;');
-            $query->bind_param("s", $word);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    // while($row = $result->fetch_assoc()) {
+                    //     echo "id: " . $row["id_produto"]. " - Name: " . $row["nome_produto"]. " " . $row["categoria_produto"]. "<br>";
+                    // }
+                    $row = $result->fetch_assoc();
+                    return json_encode($this->utf8size($row));
+                } else {
+                    return "";
+                }
+                $conn->close();
             } else {
-                return false;
+                $error = $conn->errno . ' ' . $conn->error;
+                return $error;
             }
+        }
+        private function utf8size($d) {
+            if (is_array($d)) {
+                foreach ($d as $k => $v) {
+                    $d[$k] = $this->utf8size($v);
+                }
+            } else if (is_string ($d)) {
+                return utf8_encode($d);
+            }
+            return $d;
         }
 
     }
