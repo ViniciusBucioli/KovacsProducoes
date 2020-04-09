@@ -1,12 +1,32 @@
+<script defer>
+      $(function () {
+
+        $('#submit').on('click', function (e) {
+
+          e.preventDefault();
+
+          $.ajax({
+            type: 'get',
+            url: './controller/produto/ProdutoControllerListar.php',
+            data: $('form').serialize(),
+            success: function (rows) {
+              console.log(rows);
+            }
+          });
+
+        });
+
+      });
+</script>
 <div class="container mt-4">
-    <form action="./controller/produto/ProdutoControllerListar.php" method="get">
+    <form>
         <div class="form-row">
             <div class="col">
                 <div class="input-group">
                     <div class="input-group-prepend"></div>
                     <input type="search" class="form-control" name="word"/>
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                        <button class="btn btn-primary" id="submit" type="button">Pesquisar</button>
                     </div>
                 </div>
             </div>

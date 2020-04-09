@@ -113,12 +113,11 @@
                 $result = $query->get_result();
                 //echo $result;
                 if ($result->num_rows > 0) {
-                    // output data of each row
-                    // while($row = $result->fetch_assoc()) {
-                    //     echo "id: " . $row["id_produto"]. " - Name: " . $row["nome_produto"]. " " . $row["categoria_produto"]. "<br>";
-                    // }
-                    $row = $result->fetch_assoc();
-                    return json_encode($this->utf8size($row));
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode($this->utf8size($rows));
                 } else {
                     return "";
                 }
