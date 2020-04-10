@@ -1,24 +1,25 @@
 <?php
     require_once '../../model/ProdutoModel.php';
+    require '../header.php';
 
     
-    if($_SERVER['REQUEST_METHOD'] != 'PUT') {
-        // Bad request
-        http_response_code(400);
+    // if($_SERVER['REQUEST_METHOD'] != 'PUT') {
+    //     // Bad request
+    //     http_response_code(400);
         
-        echo json_encode(array("message" => "Apenas PUT."));
-        exit();
-    }
+    //     echo json_encode(array("message" => "Apenas PUT."));
+    //     exit();
+    // }
     
-    parse_str(file_get_contents("php://input"),$put);
+    //$_PUT = json_decode(file_get_contents('php://input'), true);
 
     if(
         !(
-            isset($put['id']) &&
-            isset($put['nome']) &&
-            isset($put['categoria']) &&
-            isset($put['preco']) &&
-            isset($put['descricao'])
+            isset($_POST['id']) &&
+            isset($_POST['nome']) &&
+            isset($_POST['categoria']) &&
+            isset($_POST['preco']) &&
+            isset($_POST['descricao'])
         )
     ) {
         // Bad request
@@ -28,11 +29,11 @@
         exit();
     }
 
-    $id = $put['id'];
-    $nome = $put['nome'];
-    $categoria = $put['categoria'];
-    $preco = $put['preco'];
-    $descricao = $put['descricao'];
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $categoria = $_POST['categoria'];
+    $preco = $_POST['preco'];
+    $descricao = $_POST['descricao'];
 
     $produto = new ProdutoModel();
     $produto->setId($id);

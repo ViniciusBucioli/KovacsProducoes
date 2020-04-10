@@ -35,7 +35,7 @@ export class ProdutoComponent implements OnInit {
     }
     public insertProduto(){
         this.produtoService.insert(this.newProduto).subscribe(
-            () => {
+            (e:any) => {
                 this.newProduto = null;
             },
             this.defaultError

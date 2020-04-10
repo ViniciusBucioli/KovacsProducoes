@@ -57,7 +57,7 @@
             $descricao = $produto->getDescricao();
 
             if($query = $this->conn->prepare('UPDATE Produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?')){
-                $query->bind_param('ssss', $nome, $categoria, $preco, $descricao, $id);
+                $query->bind_param('sssss', $nome, $categoria, $preco, $descricao, $id);
                 $result = $query->execute();
                 if($result)
                     return true;

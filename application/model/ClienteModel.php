@@ -54,6 +54,42 @@
                 $query->bind_param("s", $word);
                 $query->execute();
 
+        function __construct(){
+            $db = new db();
+            $this->conn = $db->connection;
+        }
+
+        //testar
+        public static function cadastrar($novoCliente) {
+            $cpf = $novoCliente->getCpf();
+            $nome = $novoCliente->getNome();
+            $email = $novoCliente->getEmail();
+            $telefone = $novoCliente->getTelefone();
+            $endereco = $novoCliente->getEndereco();
+
+            if($query = $this->conn->prepare('INSERT INTO Cliente (CPF, nome_cliente, email_cliente, telefone_cliente, endereco_cliente) VALUES (?, ?, ?, ?, ?);')){
+                $query->bind_param("sssss",$cpf, $nome, $email, $telefone, $endereco);
+                $runQuery = $query->execute();
+                if($runQuery)
+                    return true;
+                else
+                    return false;
+                    $this->conn->close();
+            }else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
+        // testar
+        public static function selectAll() {
+            
+            if($query = $this->conn->prepare('SELECT * FROM Cliente'))
+            $runQuery = $query->execute();
+
+            if ($runQuery) {
+                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
+                    $myArray[] = $row;
+
                 $result = $query->get_result();
                 //echo $result;
                 if ($result->num_rows > 0) {
@@ -71,6 +107,21 @@
                 return $error;
             }
         }
+        // testar
+        public static function selectByName($nome) {
+            
+            if($query = $this->conn->prepare('SELECT * FROM Cliente WHERE nome_cliente = ?;')){
+                $query->bind_param("s", $nome);
+                $runQuery = $query->execute();
+                if($runQuery)
+                return true;
+            else
+                return false;
+                $this->conn->close();
+            }
+            if ($runQuery) {
+                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
+                    $myArray[] = $row;
 
         //testado e confirmado
         public function searchByName($word) {
