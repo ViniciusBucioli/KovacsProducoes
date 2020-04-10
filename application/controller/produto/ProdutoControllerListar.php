@@ -1,6 +1,7 @@
 <?php
     require_once '../../model/ProdutoModel.php';
-
+    
+    header("Access-Control-Allow-Origin: *");
     //$nome = $_GET['Nome'];
     //$categoria = $_GET['Categoria'];
     $word = $_GET['word'];

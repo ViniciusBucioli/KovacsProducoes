@@ -1,5 +1,4 @@
 
-<div class="container mt-4">
     <form>
         <div class="form-row">
             <div class="col">
@@ -12,64 +11,72 @@
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="col text-right mt-2 mb-2"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i></button></div>
+    </form>
+    <div class="form-row" *ngIf="!newProduto">
+        <div class="col text-right mt-2 mb-2">
+            <button class="btn btn-primary" type="button" (click)="createProduto()">
+                <i class="fa fa-plus"></i> Adicionar
+            </button>
         </div>
-        <div class="form-row mt-4">
-            <div class="col">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Preço</th>
-                                <th>Descrição<br /></th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let produto on produtos">
-                                <ng-template [ngIf]="selectedToEdit != produto.id">
-                                    <td>{{ produto.nome }}</td>
-                                    <td>{{ produto.categoria }}</td>
-                                    <td>{{ produto.preco }}</td>
-                                    <td>{{ produto.descricao }}</td>
-                                </ng-template>
-                                <ng-template [ngIf]="selectedToEdit == produto.id">
-                                    <td><input type="text" class="form-control" [(ngModule)]="produto.nome"/></td>
-                                    <td><input type="text" class="form-control" [(ngModule)]="produto.categoria" /></td>
-                                    <td><input type="text" class="form-control" [(ngModule)]="produto.preco" /></td>
-                                    <td><input type="text" class="form-control" [(ngModule)]="produto.descricao" /></td>
-                                </ng-template>
+    </div>
+    <div class="form-row mt-4" *ngIf="newProduto">
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.nome" name="nome" /></div>
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.categoria" name="categoria" /></div>
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.preco" name="preco" /></div>
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.descricao" name="descricao" /></div>
+        <div class="col"><button class="btn btn-primary" id="submit" type="button" (click)="insertProduto()">Salvar</button></div>
+    </div>
+    <div class="form-row" *ngIf="newProduto">
+        <div class="col text-right mt-2 mb-2">
+            <button class="btn btn-primary" type="button" (click)="newProduto = null">
+                <i class="fa fa-remove"></i> Cancelar
+            </button>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Descrição<br /></th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="produtos && produtos.length">
+                        <tr *ngFor="let produto of produtos">
+                            <ng-template [ngIf]="selectedToEdit != produto.id">
+                                <td>{{ produto.nome }}</td>
+                                <td>{{ produto.categoria }}</td>
+                                <td>{{ produto.preco }}</td>
+                                <td>{{ produto.descricao }}</td>
+                            </ng-template>
+                            <ng-template [ngIf]="selectedToEdit == produto.id">
+                                <td><input type="text" class="form-control" [(ngModel)]="produto.nome" name="nome" /></td>
+                                <td><input type="text" class="form-control" [(ngModel)]="produto.categoria" name="categoria" /></td>
+                                <td><input type="text" class="form-control" [(ngModel)]="produto.preco" name="preco" /></td>
+                                <td><input type="text" class="form-control" [(ngModel)]="produto.descricao" name="descricao" /></td>
+                            </ng-template>
 
-                                <td class="text-center">
-                                    <div role="group" class="btn-group">
-                                        <button class="btn btn-primary" type="button" *ngIf="selectedToEdit != produto.id" (click)="selectedToEdit = produto.id">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-primary" type="button" *ngIf="selectedToEdit == produto.id" (click)="saveProduto(produto)">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fa fa-remove"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <div role="group" class="btn-group">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fa fa-remove"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <td class="text-center">
+                                <div role="group" class="btn-group">
+                                    <button class="btn btn-primary" type="button" *ngIf="selectedToEdit != produto.id" (click)="selectedToEdit = produto.id">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-primary" type="button" *ngIf="selectedToEdit == produto.id" (click)="updateProduto(produto)">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-primary" type="button" (click)="selectedToEdit = 0">
+                                        <i class="fa fa-remove"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </form>
-</div>
+    </div>

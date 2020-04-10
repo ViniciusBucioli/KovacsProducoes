@@ -11,6 +11,7 @@ export class ProdutoComponent implements OnInit {
 
     public produtos: Array<ProdutoModel>;
     public selectedToEdit: number;
+    public newProduto: ProdutoModel;
 
     constructor(
         private produtoService: ProdutoService
@@ -21,7 +22,7 @@ export class ProdutoComponent implements OnInit {
     }
 
     private getProdutos(){
-        this.produtoService.searchProduto('').subscribe(
+        this.produtoService.search('').subscribe(
             (produtos: Array<ProdutoModel>) => {
                 this.produtos = produtos;
             },
@@ -29,15 +30,29 @@ export class ProdutoComponent implements OnInit {
         );
     }
 
-    public saveProduto(produto: ProdutoModel){
-        this.produtoService.saveProduto(produto).subscribe(
-            () => {},
+    public createProduto() {
+        this.newProduto = new ProdutoModel();
+    }
+    public insertProduto(){
+        this.produtoService.insert(this.newProduto).subscribe(
+            () => {
+                this.newProduto = null;
+            },
+            this.defaultError
+        )
+    }
+
+    public updateProduto(produto: ProdutoModel){
+        this.produtoService.update(produto).subscribe(
+            () => {
+                this.selectedToEdit = 0;
+            },
             this.defaultError
         )
     }
 
     public deleteProduto(produto: ProdutoModel) {
-        this.produtoService.deleteProduto(produto).subscribe(
+        this.produtoService.delete(produto.id).subscribe(
             () => {
                 this.getProdutos();
             },

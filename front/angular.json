@@ -23,7 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/bootstrap/css/bootstrap.min.css",
+              "src/assets/fonts/fontawesome-all.min.css",
+              "src/assets/fonts/font-awesome.min.css",
+              "src/assets/css/global-style.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -82,7 +86,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+                "src/assets/bootstrap/js/bootstrap.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

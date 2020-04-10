@@ -12,11 +12,19 @@ export class ProdutoService {
         private httpClient: HttpClient
     ) { }
 
-    public searchProduto(word:string): Observable<any> {
-        return this.httpClient.get(`http://localhost:5500/gerente.php?word=${word}`)
+    public search(word:string): Observable<any> {
+        return this.httpClient.get(`http://localhost:5500/controller/produto/ProdutoControllerListar.php?word=${word}`);
     }
 
-    public saveProduto(produto: ProdutoModel): Observable<any> {
-        return null;
+    public insert(produto: ProdutoModel): Observable<any> {
+        return this.httpClient.post(`http://localhost:5500/controller/produto/ProdutoControllerCadastro.php`, produto);
+    }
+
+    public update(produto: ProdutoModel): Observable<any> {
+        return this.httpClient.put(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, produto);
+    }
+
+    public delete(id: number): Observable<any> {
+        return null
     }
 }

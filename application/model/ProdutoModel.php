@@ -2,9 +2,13 @@
     require '../../utils/db.php';
 
     class ProdutoModel {
+        private $id;
+        public function setId($id) { $this->id = $id; }
+        public function getId() { return $this->id; }
+
         private $nome;
-        public function setNome($cpf) { $this->cpf = $cpf; }
-        public function getNome() { return $this->cpf; }
+        public function setNome($nome) { $this->nome = $nome; }
+        public function getNome() { return $this->nome; }
 
         private $categoria;
         public function setCategoria($categoria) { $this->categoria = $categoria; }
@@ -26,15 +30,44 @@
         }
         
         public function cadastrar($novoProduto) {
+            $nome = $novoProduto->getNome();
+            $categoria = $novoProduto->getCategoria();
+            $preco = $novoProduto->getPreco();
+            $descricao = $novoProduto->getDescricao();
 
-            $query = $this->conn->prepare('INSERT INTO Produto (nome_produto, categoria_produto, preco_custo_produto, descricao_produto) VALUES (?, ?, ?, ?);');
-            $query->bind_param("sssss", $novoProduto->getNome(), $novoProduto->getCategoria(), $novoProduto->getPreco(), $novoProduto->getDescricao());
-            $runQuery = $query->execute();
+            if($query = $this->conn->prepare('INSERT INTO Produto (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?);')){
+                $query->bind_param('ssss', $nome, $categoria, $preco, $descricao);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
 
-            if($runQuery)
-                return true;
-            else
-                return false;
+        public function atualizar($produto) {
+            $id = $produto->getId();
+            $nome = $produto->getNome();
+            $categoria = $produto->getCategoria();
+            $preco = $produto->getPreco();
+            $descricao = $produto->getDescricao();
+
+            if($query = $this->conn->prepare('UPDATE Produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?')){
+                $query->bind_param('ssss', $nome, $categoria, $preco, $descricao, $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
         }
         
         public function selectAll() {
@@ -106,7 +139,7 @@
         public function search($word) {
             $word = '%'.$word.'%';
             
-            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto like ?')) {
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome like ?')) {
                 $query->bind_param("s", $word);
                 $query->execute();
 
@@ -121,9 +154,9 @@
                 } else {
                     return "";
                 }
-                $conn->close();
+                $this->conn->close();
             } else {
-                $error = $conn->errno . ' ' . $conn->error;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
             }
         }
