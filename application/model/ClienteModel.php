@@ -22,25 +22,32 @@
         public function setEndereco($endereco) { $this->endereco = $endereco; }
         public function getEndereco() {return $this->endereco; }
 
+        //testar
         public static function cadastrar($novoCliente) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+            $cpf = $novoCliente->getCpf();
+            $nome = $novoCliente->getNome();
+            $email = $novoCliente->getEmail();
+            $telefone = $novoCliente->getTelefone();
+            $endereco = $novoCliente->getEndereco();
 
-            $query = $link->prepare('INSERT INTO Cliente (CPF, nome_cliente, email_cliente, telefone_cliente, endereco_cliente) VALUES (?, ?, ?, ?, ?);');
-            $query->bind_param("sssss", $novoCliente->getCpf(), $novoCliente->getNome(), $novoCliente->getEmail(), $novoCliente->getTelefone(), $novoCliente->getEndereco());
+            if($query = $this->conn->prepare('INSERT INTO Cliente (CPF, nome_cliente, email_cliente, telefone_cliente, endereco_cliente) VALUES (?, ?, ?, ?, ?);')){
+            $query->bind_param("sssss",$cpf, $nome, $email, $telefone, $endereco);
             $runQuery = $query->execute();
-
             if($runQuery)
                 return true;
             else
                 return false;
+                $this->conn->close();
+        }else {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            return $error;
         }
-        
+    }
+        // testar
         public static function selectAll() {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Cliente');
+            // $objBD = new db();
+            // $link = $objBD->mysqlConnect();
+            if($query = $this->conn->prepare('SELECT * FROM Cliente'))
             $runQuery = $query->execute();
 
             if ($runQuery) {
@@ -52,16 +59,19 @@
                 return false;
             }
         }
-        
+        // testar
         public static function selectByCPF($cpf) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Cliente WHERE CPF = ?;');
+            // $objBD = new db();
+            // $link = $objBD->mysqlConnect();
+            if($query = $this->conn->prepare('SELECT * FROM Cliente WHERE CPF = ?;')){
             $query->bind_param("s", $cpf);
-
-            $runQuery = $query->execute();
-
+            $runQuery = $query->execute();   
+                if($runQuery)
+                return true;
+            else
+                return false;
+                $this->conn->close();
+            }
             if ($runQuery) {
                 while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
                     $myArray[] = $row;
@@ -71,16 +81,19 @@
                 return false;
             }
         }
-        
+        // testar
         public static function selectByName($nome) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Cliente WHERE nome_cliente = ?;');
-            $query->bind_param("s", $nome);
-
-            $runQuery = $query->execute();
-
+            // $objBD = new db();
+            // $link = $objBD->mysqlConnect();
+            if($query = $this->conn->prepare('SELECT * FROM Cliente WHERE nome_cliente = ?;')){
+                $query->bind_param("s", $nome);
+                $runQuery = $query->execute();
+                if($runQuery)
+                return true;
+            else
+                return false;
+                $this->conn->close();
+            }
             if ($runQuery) {
                 while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
                     $myArray[] = $row;
@@ -92,4 +105,3 @@
         }
 
     }
-?>

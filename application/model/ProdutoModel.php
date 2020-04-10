@@ -28,7 +28,7 @@
             $db = new db();
             $this->conn = $db->connection;
         }
-        
+        //está funcionando
         public function cadastrar($novoProduto) {
             $nome = $novoProduto->getNome();
             $categoria = $novoProduto->getCategoria();
@@ -48,7 +48,7 @@
                 return $error;
             }
         }
-
+        
         public function atualizar($produto) {
             $id = $produto->getId();
             $nome = $produto->getNome();
@@ -136,6 +136,7 @@
             }
         }
 
+        //está funcionando
         public function search($word) {
             $word = '%'.$word.'%';
             
