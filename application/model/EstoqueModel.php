@@ -10,27 +10,41 @@
         public function setQuantidade($quantidade) { $this->quantidade = $quantidade; }
         public function getQuantidade() { return $this->quantidade; }
 
+        private $conn;
+        function __construct()
+        {
+            $db = new db();
+            $this->conn = $db->connection;
+        }
+        
+
+        // testar
         public static function cadastrar($novoEstoque) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('INSERT INTO Cliente (qtd_movimento_estoque, quantidade) VALUES (?, ?);');
-            $query->bind_param("ss", $novoEstoque->getMovimentoEstoque(), $novoEstoque->getQuantidade());
-            $runQuery = $query->execute();
-
+            // $objBD = new db();
+            // $link = $objBD->mysqlConnect();
+            if($query = $this->conn->prepare('INSERT INTO Cliente (qtd, quantidade) VALUES (?, ?);')){
+                $query->bind_param("ss", $novoEstoque->getMovimentoEstoque(), $novoEstoque->getQuantidade());
+                $runQuery = $query->execute();
+                
             if($runQuery)
                 return true;
             else
-                return false;
+                return false;   
+            }else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
         }
-
+        // testar
         public static function selectAll() {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Estoque');
-            $runQuery = $query->execute();
-
+            // $objBD = new db();
+            // $link = $objBD->mysqlConnect();
+            if($query = $this->conn->prepare('SELECT * FROM Estoque')){
+                $runQuery = $query->execute();
+            }else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
             if ($runQuery) {
                 while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
                     $myArray[] = $row;

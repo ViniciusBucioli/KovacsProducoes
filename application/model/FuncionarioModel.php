@@ -2,43 +2,44 @@
     require '../utils/db.php';
 
     class FuncionarioModel {
-        $cpf;
+        
+        private $cpf;
         public function setCpf($cpf) { $this->cpf = $cpf; }
         public function getCpf() { return $this->cpf; }
 
-        $nome;
+        private $nome;
         public function setNome($nome) { $this->nome = $nome; }
         public function getNome() { return $this->nome; }
 
-        $cargo;
+        private $cargo;
         public function setCargo($cargo) { $this->cargo = $cargo; }
         public function getCargo() { return $this->cargo; }
 
-        $horaTrabalho;
+        private$horaTrabalho;
         public function setHoraTrabalho($horaTrabalho) { $this->horaTrabalho = $horaTrabalho; }
         public function getHoraTrabalho() { return $this->horaTrabalho; }
 
-        $salario;
+        private$salario;
         public function setSalario($salario) { $this->salario = $salario; }
         public function getSalario() { return $this->salario; }
 
-        $telefone;
+        private$telefone;
         public function setTelefone($telefone) { $this->telefone = $telefone; }
         public function getTelefone() { return $this->telefone; }
 
-        $endereco;
+        private$endereco;
         public function setEndereco($endereco) { $this->endereco = $endereco; }
         public function getEndereco() { return $this->endereco; }
 
-        $meta;
+        private $meta;
         public function setMeta($meta) { $this->meta = $meta; }
         public function getMeta() { return $this->meta; }
 
-        $comissao;
+        private $comissao;
         public function setComissao($comissao) { $this->comissao = $comissao; }
         public function getComissao() { return $this->comissao; }
 
-        $vendas;
+        private $vendas;
         public function setVendas($vendas) { $this->vendas = $vendas; }
         public function getVendas() { return $this->vendas; }
 

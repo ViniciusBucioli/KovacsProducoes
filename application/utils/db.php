@@ -14,7 +14,7 @@ class db {
         $this->connection = new mysqli($this->host, $this->user, $this->password, $this->db);
         //Connection check
         if ($this->connection->connect_error) {
-            die("ERROR: Could not connect. " . $conn->connect_error);
+            die("ERROR: Could not connect. " . $this->connection->connect_error);
         }
     }
 }
