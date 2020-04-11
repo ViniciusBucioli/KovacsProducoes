@@ -30,7 +30,6 @@
         }
         //está funcionando
         public function cadastrar() {
-
             if($query = $this->conn->prepare('INSERT INTO Produto (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?);')){
                 $query->bind_param('ssss', $this->nome, $this->categoria, $this->preco, $this->descricao);
                 $result = $query->execute();
@@ -46,9 +45,8 @@
         }
         
         public function atualizar() {
-
             if($query = $this->conn->prepare('UPDATE Produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?')){
-                $query->bind_param('sssss', $this->nome, $this->categoria, $this->preco, $this->descricao, $this->id);
+                $query->bind_param('ssss', $this->nome, $this->categoria, $this->preco, $this->descricao, $this->id);
                 $result = $query->execute();
                 if($result)
                     return true;
@@ -61,11 +59,9 @@
             }
         }
         
-        public function selectByID($idProduto) {
+        public function selectAll() {
 
-            $query = $this->conn->prepare('SELECT * FROM Produto WHERE id_produto = ?;');
-            $query->bind_param("s", $idProduto);
-
+            $query = $this->conn->prepare('SELECT * FROM Produto');
             $runQuery = $query->execute();
 
             if ($runQuery) {
@@ -84,14 +80,42 @@
             $query->bind_param("s", $nome);
 
             $runQuery = $query->execute();
+        public function searchByID($idProduto) {
 
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE id_produto = ?;')){
+                $query->bind_param("s", $idProduto);
+                $runQuery = $query->execute();
             if ($runQuery) {
                 while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
                     $myArray[] = $row;
-
-                return json_encode($myArray);
+    
+            return json_encode($myArray);
             } else {
                 return false;
+                }
+            }else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
+        
+        public function selectByNome($nome) {
+
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto = ?;')){
+                $query->bind_param("s", $nome);
+                $runQuery = $query->execute();
+                if ($runQuery) {
+                    while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
+                        $myArray[] = $row;
+    
+                    return json_encode($myArray);
+                } else {
+                    return false;
+                }
+            }
+            else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }
 
@@ -127,7 +151,7 @@
                     while($row = $result->fetch_assoc()) {
                         $rows[] = $row;
                     }
-                    return json_encode($this->utf8size($rows));
+                    return json_encode(utf8size($rows));
                 } else {
                     return "";
                 }
