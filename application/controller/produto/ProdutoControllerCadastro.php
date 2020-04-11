@@ -1,17 +1,19 @@
 <?php
     require_once '../../model/ProdutoModel.php';
+    require '../header.php';
 
-    
-    if($_SERVER['REQUEST_METHOD'] != 'GET') {
+    if($_SERVER['REQUEST_METHOD'] != 'POST') {
         // Bad request
         http_response_code(400);
         
-        echo json_encode(array("message" => "Apenas GET."));
+        echo json_encode(array("message" => "Apenas POST."));
         exit();
     }
+    
+    $_POST = json_decode(file_get_contents('php://input'), true);
+
     if(
         !(
-            empty($_POST['id']) &&
             isset($_POST['nome']) &&
             isset($_POST['categoria']) &&
             isset($_POST['preco']) &&
@@ -20,8 +22,7 @@
     ) {
         // Bad request
         http_response_code(400);
-        
-        echo json_encode(array("message" => "Dados incompletos."));
+        echo json_encode(array("message" => "Dados incompletos.".$empty_keys));
         exit();
     }
         

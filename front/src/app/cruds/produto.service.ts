@@ -21,7 +21,7 @@ export class ProdutoService {
     }
 
     public update(produto: ProdutoModel): Observable<any> {
-        return this.httpClient.put(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, produto);
+        return this.httpClient.post(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, produto);
     }
 
     public delete(id: number): Observable<any> {
