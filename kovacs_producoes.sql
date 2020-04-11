@@ -1,8 +1,6 @@
---
--- File generated with SQLiteStudio v3.2.1 on dom mar 29 21:56:43 2020
---
--- Text encoding used: System
---
+
+
+start transaction;
 create schema kovacs_producoes;
 -- drop schema kovacs_producoes;
 use kovacs_producoes;
@@ -14,7 +12,7 @@ CREATE TABLE Aluguel_Produto (
 
 -- Table: Cliente
 CREATE TABLE Cliente (
-	Matricula int (5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	id int (5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     CPF int (12) NOT NULL,
     nome TEXT (100) NOT NULL,
     email TEXT (50) NOT NULL,
@@ -54,7 +52,7 @@ INSERT INTO Funcionario (
 -- Table: Ponto
 CREATE TABLE Ponto (
 	id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, 
-    matricula int (8) NOT NULL REFERENCES Funcionario (Matricula), 
+    matricula int (8) NOT NULL REFERENCES Funcionario (id), 
     entrada DATETIME, 
     saida DATETIME);
 
@@ -79,6 +77,7 @@ insert into produto values (default, "Pano verde", "Estudio", 200, "Pano verde p
 -- Table: Servico
 CREATE TABLE Servico (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    oferecido_por int NOT NULL REFERENCES Funcionario (id),
     categoria TEXT (50) NOT NULL, 
     preco int NOT NULL, 
     descricao TEXT (200) NOT NULL, 
@@ -88,15 +87,11 @@ CREATE TABLE Servico (
 -- Table: Venda
 CREATE TABLE Venda (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    id_produto int NOT NULL REFERENCES Produto (id),
+    vendido_por int Not NULL REFERENCES Funcionario (id),
     data DATE NOT NULL, 
     preco int NOT NULL, 
     desconto int, 
     preco_total int NOT NULL
 );
-
--- Table: Venda_Produto
-CREATE TABLE Venda_Produto (
-	id_venda_produto int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-    desconto_venda_produto int, 
-    preco_venda_produto int NOT NULL
-);
+commit;

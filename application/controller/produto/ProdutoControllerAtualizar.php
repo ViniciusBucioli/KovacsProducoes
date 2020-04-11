@@ -13,11 +13,6 @@
     
     //$_PUT = json_decode(file_get_contents('php://input'), true);
     
-    // $header_ = '{';
-    // foreach (getallheaders() as $header => $value) {
-    //     $header_ .= "\"$header\": \"$value\", ";
-    // }
-    // $header_ .= "\"fim\":\"0\"}";
     
     // foreach (getallheaders() as $header => $value) {
     //     echo "$header: $value <br />\n";
