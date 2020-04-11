@@ -20,8 +20,6 @@
 
         // testar
         public static function cadastrar($novoEstoque) {
-            // $objBD = new db();
-            // $link = $objBD->mysqlConnect();
             if($query = $this->conn->prepare('INSERT INTO Cliente (qtd, quantidade) VALUES (?, ?);')){
                 $query->bind_param("ss", $novoEstoque->getMovimentoEstoque(), $novoEstoque->getQuantidade());
                 $runQuery = $query->execute();
@@ -35,23 +33,27 @@
                 return $error;
             }
         }
-        // testar
-        public static function selectAll() {
-            // $objBD = new db();
-            // $link = $objBD->mysqlConnect();
-            if($query = $this->conn->prepare('SELECT * FROM Estoque')){
-                $runQuery = $query->execute();
-            }else {
+        public function searchByName($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Estoque WHERE nome like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
+
+                $result = $query->get_result();
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
+            } else {
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
-            }
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
-            } else {
-                return false;
             }
         }
     }

@@ -10,72 +10,68 @@
         public function setNome($nome) { $this->nome = $nome; }
         public function getNome() { return $this->nome; }
 
-        public static function cadastrar($novoPortifolio) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+        public function cadastrar() {
+            if($query = $this->conn->prepare('INSERT INTO Portifolio (id_portifolio, arquivo_portifolio, nome_portifolio) VALUES (?, ?);')){
+                $query->bind_param("ss", $this->novoPonto, $this->novoPonto);
+                $runQuery = $query->execute();
+                if($runQuery)
+                    return true;
+                else
+                    return false;
+                }
+                else {
+                    $error = $this->conn->errno . ' ' . $this->conn->error;
+                    return $error;
+                }
+            }        
+            
+        public function searchByID($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Portifolio WHERE id_portifolio like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $link->prepare('INSERT INTO Portifolio (id_portifolio, arquivo_portifolio, nome_portifolio) VALUES (?, ?);');
-            $query->bind_param("ss", $novoPonto->getArquivo(), $novoPonto->getNome());
-            $runQuery = $query->execute();
-
-            if($runQuery)
-                return true;
-            else
-                return false;
-        }
-
-        function selectAll() {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Portifolio');
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
             } else {
-                return false;
-            }
-        }
-
-        function selectByID($idPortifolio) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Portifolio WHERE id_portifolio = ?;');
-            $query->bind_param("s", $idPortifolio);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
-            } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }     
         
-        function selectByNome($nome) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+        public function searchByName($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Portifolio WHERE nome_portifolio like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $link->prepare('SELECT * FROM Portifolio WHERE nome_portifolio = ?;');
-            $query->bind_param("s", $nome);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
             } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }
     }

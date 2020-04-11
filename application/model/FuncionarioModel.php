@@ -44,12 +44,11 @@
         public function getVendas() { return $this->vendas; }
 
         public static function cadastrar($novoFuncionario) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('INSERT INTO Funcionario (CPF_funcionario, nome_funcionario, cargo_funcionairo, hora_trabalho_funcionario, salario_funcionario, telefone_funcionario, endereco_funcionario, meta_funcionario, comissao_funcionario, vendas_funcionario) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);');
-            $query->bind_param("ssssssssss", $novoFuncionario->getCpf(), $novoFuncionario->getNome(), $novoFuncionario->getCargo(), $novoFuncionario->getHoraTrabalho(), $novoFuncionario->getSalario(), $novoFuncionario->getTelefone(), $novoFuncionario->getEndereco(), $novoFuncionario->getMeta(), $novoFuncionario->getComissao(), $novoFuncionario->getVendas());
-            $runQuery = $query->execute();
+            if($query = $this->conn->prepare('INSERT INTO Funcionario (CPF_funcionario, nome_funcionario, cargo_funcionairo, hora_trabalho_funcionario, salario_funcionario, telefone_funcionario, endereco_funcionario, meta_funcionario, comissao_funcionario, vendas_funcionario) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);')){
+                $query->bind_param("ssssssssss", $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario);
+                $runQuery = $query->execute();
+            }
+            
 
             if($runQuery)
                 return true;
@@ -58,12 +57,9 @@
         }
 
         public static function selectAll() {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('SELECT * FROM Funcionario');
-            $runQuery = $query->execute();
-
+            if($query = $this->conn->prepare('SELECT * FROM Funcionario')){
+                $runQuery = $query->execute();
+            }
             if ($runQuery) {
                 while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
                     $myArray[] = $row;
@@ -72,43 +68,53 @@
             } else {
                 return false;
             }
-        }
-        
-        public static function selectByCPF($cpf) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+        }        
+        public function searchByCPF($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Funcionario WHERE cpf like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $link->prepare('SELECT * FROM Funcionario WHERE CPF_funcionario = ?;');
-            $query->bind_param("s", $cpf);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
             } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }
-        
-        public static function selectByName($nome) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
+        public function searchByName($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Funcionario WHERE nome like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $link->prepare('SELECT * FROM Funcionario WHERE nome_funcionario = ?;');
-            $query->bind_param("s", $nome);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
             } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }
     }

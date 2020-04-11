@@ -59,82 +59,55 @@
             }
         }
         
-        public function selectAll() {
+        public function searchByNome($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-            $query = $this->conn->prepare('SELECT * FROM Produto');
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
-            } else {
-                return false;
-            }
-        }
-        
-        public function selectByNome($nome) {
-
-            $query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto = ?;');
-            $query->bind_param("s", $nome);
-
-            $runQuery = $query->execute();
-        public function searchByID($idProduto) {
-
-            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE id_produto = ?;')){
-                $query->bind_param("s", $idProduto);
-                $runQuery = $query->execute();
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-    
-            return json_encode($myArray);
-            } else {
-                return false;
-                }
-            }else {
-                $error = $this->conn->errno . ' ' . $this->conn->error;
-                return $error;
-            }
-        }
-        
-        public function selectByNome($nome) {
-
-            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto = ?;')){
-                $query->bind_param("s", $nome);
-                $runQuery = $query->execute();
-                if ($runQuery) {
-                    while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                        $myArray[] = $row;
-    
-                    return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
                 } else {
-                    return false;
+                    return "";
                 }
-            }
-            else {
+                $this->conn->close();
+            } else {
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
             }
         }
+        public function searchByCategory($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE categoria_produto like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-        public function selectByCategory($categoria) {
-
-            $query = $this->conn->prepare('SELECT * FROM Produto WHERE categoria_produto = ?;');
-            $query->bind_param("s", $categoria);
-
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
+                $this->conn->close();
             } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
         }
+        
 
         //está funcionando
         public function search($word) {

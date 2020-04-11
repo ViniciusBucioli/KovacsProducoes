@@ -23,27 +23,31 @@
         public function getIdProduto() { return $this->idProduto; }
 
         public static function cadastrar($novoVenda) {
-            $objBD = new db();
-            $link = $objBD->mysqlConnect();
-
-            $query = $link->prepare('INSERT INTO Venda (data_venda, preco_venda, desconto_venda, preco_total_venda) VALUES (?, ?, ?, ?);');
-            $query->bind_param("ssss", $novoVenda->getData(), $novoVenda->getPreco(), $novoVenda->getDesconto(), $novoVenda->getPrecoTotal());
-            $runQuery = $query->execute();
-
-            /*TODO - Venda_Produto
-                $query = $link->prepare('INSERT INTO Venda_Produto (id_produto, id_venda, desconto_venda_produto, preco_venda_produto) VALUES (?, ?, ?, ?);');
-            */
-
+            if($query = $this->conn->prepare('INSERT INTO Venda (data_venda, preco_venda, desconto_venda, preco_total_venda) VALUES (?, ?, ?, ?);')){
+                $query->bind_param("ssss", $novoVenda->getData(), $novoVenda->getPreco(), $novoVenda->getDesconto(), $novoVenda->getPrecoTotal());
+                $runQuery = $query->execute();
             if($runQuery)
                 return true;
             else
                 return false;
         }
+        else {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            return $error;
+        }
+    }    
+}
+            
 
-        /* TOD - List
-            selectAll();
-            selectByIdProduto($idProduto);
-            selectByData($data);
-        */
-    }
+/*TODO - Venda_Produto
+$query = $link->prepare('INSERT INTO Venda_Produto (id_produto, id_venda, desconto_venda_produto, preco_venda_produto) VALUES (?, ?, ?, ?);');
+*/
+
+            
+
+/* TOD - List
+selectAll();
+selectByIdProduto($idProduto);
+selectByData($data);
+*/
 ?>
