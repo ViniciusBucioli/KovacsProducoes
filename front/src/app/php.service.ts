@@ -19,20 +19,20 @@ export class PhpService {
         return this.httpClient.get(url);
     }
     public post<T>(url:string, body: any): Observable<any> {
-        return this.httpClient.post(url,this.toHttp(body), this.headers);
+        return this.httpClient.post(url,this.toHttp(body));
     }
     public put<T>(url:string, body: any): Observable<any> {
-        return this.httpClient.post(url,this.toHttp(body), this.headers);
+        return this.httpClient.post(url,this.toHttp(body));
     }
-    public delete<T>(url:string, number: number): Observable<any> {
-        return this.httpClient.post(url,this.toHttp(number), this.headers);
+    public delete<T>(url:string, id: number): Observable<any> {
+        return this.httpClient.post(url,this.toHttp({"id": id}));
     }
 
     
     public toHttp(obj: any) {
         let params = new HttpParams();
-        Object.keys(this).forEach(function (item) {  
-            params = params.set(item, this[item]);
+        Object.keys(obj).forEach(function (item) {  
+            params = params.set(item, obj[item]);
         });
         return params;
     }

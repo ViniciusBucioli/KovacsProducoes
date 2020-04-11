@@ -10,17 +10,11 @@
         exit();
     }
     
-    echo json_encode($_POST);
-    exit();
-    $_POST = json_decode(file_get_contents('php://input'), true);
-
     if(
-        !(
-            isset($_POST['nome']) &&
-            isset($_POST['categoria']) &&
-            isset($_POST['preco']) &&
-            isset($_POST['descricao'])
-        )
+        empty($_POST['nome']) ||
+        empty($_POST['categoria']) ||
+        empty($_POST['preco']) &&
+        empty($_POST['descricao'])
     ) {
         // Bad request
         http_response_code(400);
@@ -39,7 +33,7 @@
     $novoProduto->setPreco($preco);
     $novoProduto->setDescricao($descricao);
 
-    if($novoProduto->cadastrar($novoProduto)){
+    if($novoProduto->cadastrar()){
         // Produto criado
         http_response_code(201);
         // tell the user

@@ -29,14 +29,10 @@
             $this->conn = $db->connection;
         }
         //está funcionando
-        public function cadastrar($novoProduto) {
-            $nome = $novoProduto->getNome();
-            $categoria = $novoProduto->getCategoria();
-            $preco = $novoProduto->getPreco();
-            $descricao = $novoProduto->getDescricao();
+        public function cadastrar() {
 
             if($query = $this->conn->prepare('INSERT INTO Produto (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?);')){
-                $query->bind_param('ssss', $nome, $categoria, $preco, $descricao);
+                $query->bind_param('ssss', $this->nome, $this->categoria, $this->preco, $this->descricao);
                 $result = $query->execute();
                 if($result)
                     return true;
@@ -49,15 +45,10 @@
             }
         }
         
-        public function atualizar($produto) {
-            $id = $produto->getId();
-            $nome = $produto->getNome();
-            $categoria = $produto->getCategoria();
-            $preco = $produto->getPreco();
-            $descricao = $produto->getDescricao();
+        public function atualizar() {
 
             if($query = $this->conn->prepare('UPDATE Produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?')){
-                $query->bind_param('sssss', $nome, $categoria, $preco, $descricao, $id);
+                $query->bind_param('sssss', $this->nome, $this->categoria, $this->preco, $this->descricao, $this->id);
                 $result = $query->execute();
                 if($result)
                     return true;
@@ -67,21 +58,6 @@
             } else {
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
-            }
-        }
-        
-        public function selectAll() {
-
-            $query = $this->conn->prepare('SELECT * FROM Produto');
-            $runQuery = $query->execute();
-
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
-            } else {
-                return false;
             }
         }
         
@@ -160,6 +136,23 @@
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
             }
+        }
+
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Produto WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
         }
         private function utf8size($d) {
             if (is_array($d)) {

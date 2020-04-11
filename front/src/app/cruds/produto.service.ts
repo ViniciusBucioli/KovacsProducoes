@@ -26,6 +26,6 @@ export class ProdutoService {
     }
 
     public delete(id: number): Observable<ProdutoModel> {
-        return this.phpService.put(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, id);
+        return this.phpService.delete(`http://localhost:5500/controller/produto/ProdutoControllerDeletar.php`, id);
     }
 }

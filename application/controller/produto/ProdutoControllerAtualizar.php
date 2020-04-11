@@ -24,10 +24,10 @@
     // }
     
     if(
-        empty($_POST['id']) &&
-        empty($_POST['nome']) &&
-        empty($_POST['categoria']) &&
-        empty($_POST['preco']) &&
+        empty($_POST['id']) ||
+        empty($_POST['nome']) ||
+        empty($_POST['categoria']) ||
+        empty($_POST['preco']) ||
         empty($_POST['descricao'])
     ) {
         // Bad request
@@ -50,7 +50,7 @@
     $produto->setPreco($preco);
     $produto->setDescricao($descricao);
 
-    if($produto->atualizar($produto)) {
+    if($produto->atualizar()) {
 
         // Produto criado
         http_response_code(200);
