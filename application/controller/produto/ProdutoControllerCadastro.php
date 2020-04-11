@@ -10,6 +10,8 @@
         exit();
     }
     
+    echo json_encode($_POST);
+    exit();
     $_POST = json_decode(file_get_contents('php://input'), true);
 
     if(
@@ -22,7 +24,7 @@
     ) {
         // Bad request
         http_response_code(400);
-        echo json_encode(array("message" => "Dados incompletos.".$empty_keys));
+        echo json_encode(array("message" => "Dados incompletos."));
         exit();
     }
         

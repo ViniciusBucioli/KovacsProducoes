@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ProdutoModel } from './models/produto-model..model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PhpService } from '../php.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,22 +10,22 @@ import { Observable } from 'rxjs';
 export class ProdutoService {
 
     constructor(
-        private httpClient: HttpClient
+        private phpService: PhpService
     ) { }
 
-    public search(word:string): Observable<any> {
-        return this.httpClient.get(`http://localhost:5500/controller/produto/ProdutoControllerListar.php?word=${word}`);
+    public search(word:string): Observable<Array<ProdutoModel>> {
+        return this.phpService.get(`http://localhost:5500/controller/produto/ProdutoControllerListar.php?word=${word}`);
     }
 
-    public insert(produto: ProdutoModel): Observable<any> {
-        return this.httpClient.post(`http://localhost:5500/controller/produto/ProdutoControllerCadastro.php`, produto);
+    public insert(produto: ProdutoModel): Observable<ProdutoModel> {
+        return this.phpService.post(`http://localhost:5500/controller/produto/ProdutoControllerCadastro.php`, produto);
     }
 
-    public update(produto: ProdutoModel): Observable<any> {
-        return this.httpClient.post(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, produto);
+    public update(produto: ProdutoModel): Observable<ProdutoModel> {
+        return this.phpService.put(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, produto);
     }
 
-    public delete(id: number): Observable<any> {
-        return null
+    public delete(id: number): Observable<ProdutoModel> {
+        return this.phpService.put(`http://localhost:5500/controller/produto/ProdutoControllerAtualizar.php`, id);
     }
 }

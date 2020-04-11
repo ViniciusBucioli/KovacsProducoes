@@ -35,8 +35,9 @@ export class ProdutoComponent implements OnInit {
     }
     public insertProduto(){
         this.produtoService.insert(this.newProduto).subscribe(
-            (e:any) => {
+            () => {
                 this.newProduto = null;
+                this.getProdutos();
             },
             this.defaultError
         )
@@ -44,8 +45,9 @@ export class ProdutoComponent implements OnInit {
 
     public updateProduto(produto: ProdutoModel){
         this.produtoService.update(produto).subscribe(
-            () => {
+            (e:any) => {
                 this.selectedToEdit = 0;
+                this.getProdutos();
             },
             this.defaultError
         )

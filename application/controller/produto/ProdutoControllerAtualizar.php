@@ -12,15 +12,23 @@
     // }
     
     //$_PUT = json_decode(file_get_contents('php://input'), true);
-
+    
+    // $header_ = '{';
+    // foreach (getallheaders() as $header => $value) {
+    //     $header_ .= "\"$header\": \"$value\", ";
+    // }
+    // $header_ .= "\"fim\":\"0\"}";
+    
+    // foreach (getallheaders() as $header => $value) {
+    //     echo "$header: $value <br />\n";
+    // }
+    
     if(
-        !(
-            isset($_POST['id']) &&
-            isset($_POST['nome']) &&
-            isset($_POST['categoria']) &&
-            isset($_POST['preco']) &&
-            isset($_POST['descricao'])
-        )
+        empty($_POST['id']) &&
+        empty($_POST['nome']) &&
+        empty($_POST['categoria']) &&
+        empty($_POST['preco']) &&
+        empty($_POST['descricao'])
     ) {
         // Bad request
         http_response_code(400);
