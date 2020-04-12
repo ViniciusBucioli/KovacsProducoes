@@ -7,9 +7,11 @@ use kovacs_producoes;
 -- Table: Aluguel_Produto
 CREATE TABLE Aluguel_Produto (
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_produto int,
     data_comeco date,
     data_fim date,
-    preco int NOT NULL);
+    preco int NOT NULL
+);
 
 -- Table: Cliente
 CREATE TABLE Cliente (
