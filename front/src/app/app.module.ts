@@ -15,6 +15,15 @@ import { ForgotPassComponent } from './login/forgot-pass/forgot-pass.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
 import { FuncionarioSidebarComponent } from './funcionario/funcionario-sidebar/funcionario-sidebar.component';
 import { FuncionarioHeaderComponent } from './funcionario/funcionario-header/funcionario-header.component';
+import { FuncionarioCalendarioComponent } from './funcionario/atividades/funcionario-calendario/funcionario-calendario.component';
+import { FuncionarioPainelTarefasComponent } from './funcionario/atividades/funcionario-painel-tarefas/funcionario-painel-tarefas.component';
+import { FuncionarioServicesComponent } from './funcionario/atividades/funcionario-services/funcionario-services.component';
+import { FuncionarioClientesComponent } from './funcionario/gestao/funcionario-clientes/funcionario-clientes.component';
+import { FuncionarioRelatoriosComponent } from './funcionario/gestao/funcionario-relatorios/funcionario-relatorios.component';
+import { FuncionarioProdutoComponent } from './funcionario/portifolio/funcionario-produto/funcionario-produto.component';
+import { FuncionarioCatalogoComponent } from './funcionario/portifolio/funcionario-catalogo/funcionario-catalogo.component';
+import { FuncionarioPedidosComponent } from './funcionario/portifolio/funcionario-pedidos/funcionario-pedidos.component';
+import { FuncionarioAtendimentoComponent } from './funcionario/gestao/funcionario-atendimento/funcionario-atendimento.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +36,16 @@ import { FuncionarioHeaderComponent } from './funcionario/funcionario-header/fun
     ForgotPassComponent,
     FuncionarioComponent,
     FuncionarioSidebarComponent,
-    FuncionarioHeaderComponent
+    FuncionarioHeaderComponent,
+    FuncionarioCalendarioComponent,
+    FuncionarioPainelTarefasComponent,
+    FuncionarioServicesComponent,
+    FuncionarioClientesComponent,
+    FuncionarioRelatoriosComponent,
+    FuncionarioProdutoComponent,
+    FuncionarioCatalogoComponent,
+    FuncionarioPedidosComponent,
+    FuncionarioAtendimentoComponent
   ],
   imports: [
     BrowserModule,
