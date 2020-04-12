@@ -1,5 +1,6 @@
 <?php
     require '../utils/db.php';
+    require '../../utils/global_functions.php';
 
     class FuncionarioModel {
         
