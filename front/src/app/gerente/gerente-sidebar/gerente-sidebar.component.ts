@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GerenteSidebarEnum } from '../../enums/gerente-sidebar.enum';
 
 @Component({
@@ -10,7 +10,8 @@ export class GerenteSidebarComponent implements OnInit {
 
     public selected: GerenteSidebarEnum;
 
-    public gerenteSidebarEnum: typeof GerenteSidebarEnum = GerenteSidebarEnum
+    public gerenteSidebarEnum: typeof GerenteSidebarEnum = GerenteSidebarEnum;
+    @Output() menuChange = new EventEmitter();
 
     constructor() { }
 

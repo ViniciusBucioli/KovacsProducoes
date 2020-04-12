@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GerenteSidebarEnum } from '../enums/gerente-sidebar.enum';
 
 @Component({
   selector: 'app-gerente',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GerenteComponent implements OnInit {
 
-  constructor() { }
+    public menuSelected: GerenteSidebarEnum = GerenteSidebarEnum.produtos;
 
-  ngOnInit() {
+    constructor() { }
+
+    ngOnInit() {
+    }
+
+  public menuChanged(selected: GerenteSidebarEnum) {
+      this.menuSelected = selected;
   }
 
 }

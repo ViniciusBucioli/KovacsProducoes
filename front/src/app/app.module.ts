@@ -11,6 +11,10 @@ import { GerenteComponent } from './gerente/gerente.component';
 import { GerenteSidebarComponent } from './gerente/gerente-sidebar/gerente-sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ForgotPassComponent } from './login/forgot-pass/forgot-pass.component';
+import { FuncionarioComponent } from './funcionario/funcionario.component';
+import { FuncionarioSidebarComponent } from './funcionario/funcionario-sidebar/funcionario-sidebar.component';
+import { FuncionarioHeaderComponent } from './funcionario/funcionario-header/funcionario-header.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     ProdutoComponent,
     GerenteComponent,
     GerenteSidebarComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ForgotPassComponent,
+    FuncionarioComponent,
+    FuncionarioSidebarComponent,
+    FuncionarioHeaderComponent
   ],
   imports: [
     BrowserModule,
