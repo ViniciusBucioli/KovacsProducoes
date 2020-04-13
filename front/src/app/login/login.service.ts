@@ -12,7 +12,7 @@ export class LoginService {
     ) { }
 
     public login(email:string, pass: string): Observable<any> {
-        return this.server.post(`http://localhost:5500/controller/login.php`, {email:email, pass: pass});
+        return this.server.post(`http://localhost:5500/controller/session/login.php`, {email:email, pass: pass});
     }
 
 }

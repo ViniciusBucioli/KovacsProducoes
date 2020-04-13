@@ -5,8 +5,11 @@ use kovacs_producoes;
 -- Table: Aluguel_Produto
 CREATE TABLE Aluguel_Produto (
 	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    desconto int,
-    preco int NOT NULL);
+    id_produto int,
+    data_comeco date,
+    data_fim date,
+    preco int NOT NULL
+);
 
 -- Table: Cliente
 CREATE TABLE Cliente (
@@ -37,15 +40,22 @@ CREATE TABLE Funcionario (
     endereco TEXT (200) NOT NULL, 
     meta int (7), 
     comissao int (7), 
-    vendas int (5)
+    vendas int (5),
+    senha text NOT NULL
 );
 
 INSERT INTO Funcionario (
 	id, cpf, nome, 
     cargo, hora, email, 
     salario, telefone, endereco, 
-    meta, comissao, vendas) 
-    VALUES (0, 47498755890, 'Vinicius Bucioli', 'Vendedor', '', 'vini123@gmail.com', 10000, 19988038368, 'rua1nuemiroasdasdfasdf', 1000, 12, 5);
+    meta, comissao, vendas,
+    senha)
+    VALUES (default, 47498755890, 'Vinicius Bucioli',
+    'Vendedor', '', 'vini123@gmail.com', 
+    10000, 19988038368, 'rua1nuemiroasdasdfasdf', 
+    1000, 12, 5,
+    'bacon123');
+    
 
 -- Table: Ponto
 CREATE TABLE Ponto (
@@ -93,3 +103,5 @@ CREATE TABLE Venda (
     preco_total int NOT NULL
 );
 commit;
+
+select * from funcionario;
