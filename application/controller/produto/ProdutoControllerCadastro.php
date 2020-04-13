@@ -13,7 +13,7 @@
     if(
         empty($_POST['nome']) ||
         empty($_POST['categoria']) ||
-        empty($_POST['preco']) &&
+        empty($_POST['preco']) ||
         empty($_POST['descricao'])
     ) {
         // Bad request

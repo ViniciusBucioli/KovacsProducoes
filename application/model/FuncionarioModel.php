@@ -44,8 +44,8 @@
         public function setVendas($vendas) { $this->vendas = $vendas; }
         public function getVendas() { return $this->vendas; }
 
-        public static function cadastrar($novoFuncionario) {
-            if($query = $this->conn->prepare('INSERT INTO Funcionario (CPF_funcionario, nome_funcionario, cargo_funcionairo, hora_trabalho_funcionario, salario_funcionario, telefone_funcionario, endereco_funcionario, meta_funcionario, comissao_funcionario, vendas_funcionario) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);')){
+        public static function cadastrar() {
+            if($query = $this->conn->prepare('INSERT INTO Funcionario (cpf, nome, cargo_funcionairo, hora_trabalho, salario, telefone, endereco, meta, comissao, vendas) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);')){
                 $query->bind_param("ssssssssss", $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario);
                 $runQuery = $query->execute();
             }

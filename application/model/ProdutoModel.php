@@ -68,7 +68,7 @@
                 $query->execute();
 
                 $result = $query->get_result();
-                //echo $result;
+                
                 if ($result->num_rows > 0) {
                     $rows = [];
                     while($row = $result->fetch_assoc()) {

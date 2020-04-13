@@ -4,10 +4,12 @@
             <h1>Kovacs Produções</h1>
         </div>
     </div>
-    <form class="form-signin" #f="ngForm" (ngSubmit)="login(f)">
+    <form class="form-signin" (ngSubmit)="login()">
         <span class="reauth-email"></span>
-        <input type="email" class="form-control" id="inputEmail" required name="email" placeholder="E-mail" autofocus />
-        <input type="password" class="form-control" id="inputPassword" required name="pass" placeholder="Senha" />
+        <input type="email" class="form-control" id="inputEmail" required name="email" placeholder="E-mail" autofocus 
+            [(ngModel)]="user.email"/>
+        <input type="password" class="form-control" id="inputPassword" required name="pass" placeholder="Senha" 
+            [(ngModel)]="user.pass"/>
         <div class="checkbox">
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="formCheck-2" />

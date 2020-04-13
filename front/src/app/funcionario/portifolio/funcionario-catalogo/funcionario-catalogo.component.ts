@@ -7,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuncionarioCatalogoComponent implements OnInit {
 
-  constructor() { }
+    public leftPage: number;
+    public rightPage: number;
 
-  ngOnInit() {
-  }
+    public totalPage = 13;
+
+    constructor() { }
+
+    ngOnInit() {
+        this.leftPage = 0;
+        this.rightPage = 1;
+    }
+
+    public next() {
+        console.log(this.leftPage);
+        if (this.rightPage < 13) {
+            this.leftPage += 2;
+            this.rightPage += 2
+        }
+    }
+
+    public previous() {
+        if (this.leftPage > 0) {
+            this.leftPage -= 2;
+            this.rightPage -= 2
+        }
+    }
 
 }
