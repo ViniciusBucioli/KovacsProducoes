@@ -1,15 +1,20 @@
 <?php
     require_once '../model/ClienteModel.php';
 
-    $cpf = $_POST['CPF'];
-    $nome = $_POST['Nome'];
+    header("Access-Control-Allow-Origin: *");
+    // $cpf = $_POST['CPF'];
+    // $nome = $_POST['Nome'];
+    $word = $_GET['word'];
 
-    $respostaModel = ClienteModel::selectAll();
-    $respostaModel = ClienteModel::selectByCPF($cpf);
-    $respostaModel = ClienteModel::selectByName($nome);
+    // $respostaModel = ClienteModel::selectAll();
+    // $respostaModel = ClienteModel::selectByCPF($cpf);
+    // $respostaModel = ClienteModel::selectByName($nome);
 
-    if($respostaModel == false)
-        header('');
+    $clienteModel = new ClienteModel();
+    $searchResult = $clienteModel->searchByName($word);
+    if($searchResult == false)
+        // header('');
+        echo 'error';
     else
-        echo $respostaModel;
+        echo $searchResult;
 ?>

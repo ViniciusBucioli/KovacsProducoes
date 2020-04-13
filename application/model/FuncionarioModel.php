@@ -3,6 +3,9 @@
     require '../../utils/global_functions.php';
 
     class FuncionarioModel {
+        private $id;
+        public function setId($id) { $this->id = $id; }
+        public function getId() { return $this->id; }
         
         private $cpf;
         public function setCpf($cpf) { $this->cpf = $cpf; }
@@ -16,9 +19,9 @@
         public function setCargo($cargo) { $this->cargo = $cargo; }
         public function getCargo() { return $this->cargo; }
 
-        private$horaTrabalho;
-        public function setHoraTrabalho($horaTrabalho) { $this->horaTrabalho = $horaTrabalho; }
-        public function getHoraTrabalho() { return $this->horaTrabalho; }
+        private$hora;
+        public function setHoraTrabalho($hora) { $this->hora = $hora; }
+        public function getHoraTrabalho() { return $this->hora; }
 
         private$salario;
         public function setSalario($salario) { $this->salario = $salario; }
@@ -43,10 +46,16 @@
         private $vendas;
         public function setVendas($vendas) { $this->vendas = $vendas; }
         public function getVendas() { return $this->vendas; }
+        
+        private $conn;
+        function __construct(){
+            $db = new db();
+            $this->conn = $db->connection;
+        }
 
-        public static function cadastrar($novoFuncionario) {
-            if($query = $this->conn->prepare('INSERT INTO Funcionario (CPF_funcionario, nome_funcionario, cargo_funcionairo, hora_trabalho_funcionario, salario_funcionario, telefone_funcionario, endereco_funcionario, meta_funcionario, comissao_funcionario, vendas_funcionario) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);')){
-                $query->bind_param("ssssssssss", $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario, $this->novoFuncionario);
+        public function cadastrar() {
+            if($query = $this->conn->prepare('INSERT INTO Funcionario (cpf, nome, cargo, hora, salario, telefone, endereco, meta, comissao, vendas) VALUES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);')){
+                $query->bind_param("ssssssssss", $this->cpf, $this->nome, $this->cargo, $this->hora, $this->salario, $this->telefone, $this->endereco, $this->meta, $this->comissao, $this->vendas);
                 $runQuery = $query->execute();
             }
             
@@ -57,19 +66,39 @@
                 return false;
         }
 
-        public static function selectAll() {
-            if($query = $this->conn->prepare('SELECT * FROM Funcionario')){
-                $runQuery = $query->execute();
-            }
-            if ($runQuery) {
-                while($row = $runQuery->fetch_array(MYSQLI_ASSOC))
-                    $myArray[] = $row;
-
-                return json_encode($myArray);
+        public function atualizar() {
+            if($query = $this->conn->prepare('UPDATE Funcionario SET cpf = ?, nome = ?, cargo = ?, hora = ?, salario = ?, telefone = ?, endereco = ?, meta = ?, comissao = ?, vendas = ? WHERE id = ?')){
+                $query->bind_param('sssssssssss', $this->cpf, $this->nome, $this->cargo, $this->hora, $this->salario, $this->telefone, $this->endereco, $this->meta, $this->comissao, $this->vendas, $this->id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
             } else {
-                return false;
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
             }
-        }        
+        }
+
+        
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Funcionario WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
+        }
+
         public function searchByCPF($word) {
             $word = '%'.$word.'%';
             

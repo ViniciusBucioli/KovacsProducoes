@@ -1,13 +1,15 @@
 <?php
-    require_once '../model/PontoModel.php';
+    require_once '../../model/ProdutoModel.php';
+    
+    header("Access-Control-Allow-Origin: *");
+    // $matriculaFuncionario = $_POST['Matricula'];
+    $word = $_GET['word'];
 
-    $matriculaFuncionario = $_POST['Matricula'];
-
-    $respostaModel = PontoModel::selectAll();
-    $respostaModel = PontoModel::selectByFuncionario($matriculaFuncionario);
-
-    if($respostaModel == false)
-        header('');
+    
+    $pontoModel = new PontoModel();
+    $searchResult = $pontoModel->searchByName($word);
+    if($searchResult == false)
+        header('error');
     else
-        echo $respostaModel;
+        echo $searchResult;
 ?>

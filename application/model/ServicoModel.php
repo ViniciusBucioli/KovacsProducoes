@@ -3,6 +3,11 @@
     require '../../utils/global_functions.php';
 
     class ServicoModel {
+        
+        private $id;
+        public function setId($id) { $this->id = $id; }
+        public function getId() { return $this->id; }
+
         private $nome;
         public function setNome($nome) { $this->nome = $nome; }
         public function getNome() { return $this->nome; }
@@ -19,9 +24,19 @@
         public function setDescricao($descricao) { $this->descricao = $descricao; }
         public function getDescricao() { return $this->descricao; }
 
+        private $oferecidopor;
+        public function setOferecidopor($oferecidopor) { $this->oferecidopor = $oferecidopor; }
+        public function getOferecidopor() { return $this->oferecidopor; }
+
+        private $conn;
+        function __construct(){
+            $db = new db();
+            $this->conn = $db->connection;
+        }
+
         public static function cadastrar($novoServico) {
-            if($query = $this->conn->prepare('INSERT INTO Servico (categoria_servico, preco_custo_Servico, descricao_Servico, nome_servico) VALUES (?, ?, ?, ?);')){
-                $query->bind_param("ssss", $this->novoServico, $this->novoServico, $this->novoServico, $this->novoServico);
+            if($query = $this->conn->prepare('INSERT INTO Servico (oferecido_por, categoria, preco, descricao,nome) VALUES (?, ?, ?, ?,?);')){
+                $query->bind_param("sssss", $this->novoServico, $this->novoServico, $this->novoServico, $this->novoServico, $this->novoServico);
                 $runQuery = $query->execute();
             if($runQuery)
                 return true;
@@ -31,8 +46,9 @@
         else {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             return $error;
+            }
         }
-    }
+
         public function searchByID($word) {
             $word = '%'.$word.'%';
             
@@ -106,6 +122,38 @@
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
             }
+        }
+
+        public function atualizar() {
+            if($query = $this->conn->prepare('UPDATE Servico SET oferecido_por = ?, categoria = ?, preco = ?, descricao = ?, nome = ? WHERE id = ?')){
+                $query->bind_param('ssssss', $this->oferecido_por, $this->categoria, $this->preco, $this->descricao, $this->nome, $this->id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
+
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Servico WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
         }
 
     }

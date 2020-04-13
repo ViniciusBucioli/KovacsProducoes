@@ -10,8 +10,9 @@
     // $respostaModel = ProdutoModel::selectByNome($nome);
     // $respostaModel = ProdutoModel::selectByCategory($categoria);
 
+    // Alterei para searchByNome pois era a mesma coisa do method search no ProdutoModel
     $produtoModel = new ProdutoModel();
-    $searchResult = $produtoModel->search($word);
+    $searchResult = $produtoModel->searchByNome($word);
     if($searchResult == false)
         //header('');
         echo 'error';

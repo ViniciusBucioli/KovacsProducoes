@@ -27,13 +27,13 @@
     $preco = $_POST['preco'];
     $descricao = $_POST['descricao'];
 
-    $novoProduto = new ProdutoModel();
-    $novoProduto->setNome($nome);
-    $novoProduto->setCategoria($categoria);
-    $novoProduto->setPreco($preco);
-    $novoProduto->setDescricao($descricao);
+    $produtoModel = new ProdutoModel();
+    $produtoModel->setNome($nome);
+    $produtoModel->setCategoria($categoria);
+    $produtoModel->setPreco($preco);
+    $produtoModel->setDescricao($descricao);
 
-    if($novoProduto->cadastrar()){
+    if($produtoModel->cadastrar()){
         // Produto criado
         http_response_code(201);
         // tell the user

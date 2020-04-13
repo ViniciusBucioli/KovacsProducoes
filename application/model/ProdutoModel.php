@@ -24,11 +24,12 @@
         public function getDescricao() { return $this->descricao; }
 
         private $conn;
-
         function __construct(){
             $db = new db();
             $this->conn = $db->connection;
         }
+
+
         //está funcionando
         public function cadastrar() {
             if($query = $this->conn->prepare('INSERT INTO Produto (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?);')){
@@ -59,59 +60,26 @@
                 return $error;
             }
         }
+
+        //
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Produto WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
+        }
         
         public function searchByNome($word) {
-            $word = '%'.$word.'%';
-            
-            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome_produto like ?')) {
-                $query->bind_param("s", $word);
-                $query->execute();
-
-                $result = $query->get_result();
-                //echo $result;
-                if ($result->num_rows > 0) {
-                    $rows = [];
-                    while($row = $result->fetch_assoc()) {
-                        $rows[] = $row;
-                    }
-                    return json_encode(utf8size($rows));
-                } else {
-                    return "";
-                }
-                $this->conn->close();
-            } else {
-                $error = $this->conn->errno . ' ' . $this->conn->error;
-                return $error;
-            }
-        }
-        public function searchByCategory($word) {
-            $word = '%'.$word.'%';
-            
-            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE categoria_produto like ?')) {
-                $query->bind_param("s", $word);
-                $query->execute();
-
-                $result = $query->get_result();
-                //echo $result;
-                if ($result->num_rows > 0) {
-                    $rows = [];
-                    while($row = $result->fetch_assoc()) {
-                        $rows[] = $row;
-                    }
-                    return json_encode(utf8size($rows));
-                } else {
-                    return "";
-                }
-                $this->conn->close();
-            } else {
-                $error = $this->conn->errno . ' ' . $this->conn->error;
-                return $error;
-            }
-        }
-        
-
-        //está funcionando
-        public function search($word) {
             $word = '%'.$word.'%';
             
             if($query = $this->conn->prepare('SELECT * FROM Produto WHERE nome like ?')) {
@@ -135,22 +103,29 @@
                 return $error;
             }
         }
+        public function searchByCategory($word) {
+            $word = '%'.$word.'%';
+            
+            if($query = $this->conn->prepare('SELECT * FROM Produto WHERE categoria like ?')) {
+                $query->bind_param("s", $word);
+                $query->execute();
 
-        public function delete($id) {
-        
-            if($query = $this->conn->prepare('DELETE FROM Produto WHERE id = ?')){
-                $query->bind_param('s', $id);
-                $result = $query->execute();
-                if($result)
-                    return true;
-                else
-                    return false;
+                $result = $query->get_result();
+                //echo $result;
+                if ($result->num_rows > 0) {
+                    $rows = [];
+                    while($row = $result->fetch_assoc()) {
+                        $rows[] = $row;
+                    }
+                    return json_encode(utf8size($rows));
+                } else {
+                    return "";
+                }
                 $this->conn->close();
             } else {
                 $error = $this->conn->errno . ' ' . $this->conn->error;
                 return $error;
             }
-
         }
     }
 ?>

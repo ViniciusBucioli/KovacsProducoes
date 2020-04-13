@@ -12,17 +12,16 @@
         public function getQuantidade() { return $this->quantidade; }
 
         private $conn;
-        function __construct()
-        {
+        function __construct(){
             $db = new db();
             $this->conn = $db->connection;
         }
         
 
         // testar
-        public static function cadastrar($novoEstoque) {
-            if($query = $this->conn->prepare('INSERT INTO Cliente (qtd, quantidade) VALUES (?, ?);')){
-                $query->bind_param("ss", $novoEstoque->getMovimentoEstoque(), $novoEstoque->getQuantidade());
+        public function cadastrar() {
+            if($query = $this->conn->prepare('INSERT INTO Estoque (qtd, quantidade) VALUES (?, ?);')){
+                $query->bind_param("ss", $this->qtd, $this->quantidade);
                 $runQuery = $query->execute();
                 
             if($runQuery)
@@ -34,6 +33,39 @@
                 return $error;
             }
         }
+
+        public function atualizar() {
+            if($query = $this->conn->prepare('UPDATE Estoque SET qtd = ?, quantidade = ? WHERE id = ?')){
+                $query->bind_param('sss', $this->qtd, $this->quantidade, $this->id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
+
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Estoque WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
+        }
+
         public function searchByName($word) {
             $word = '%'.$word.'%';
             

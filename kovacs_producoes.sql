@@ -1,5 +1,3 @@
-
-
 start transaction;
 create schema kovacs_producoes;
 -- drop schema kovacs_producoes;

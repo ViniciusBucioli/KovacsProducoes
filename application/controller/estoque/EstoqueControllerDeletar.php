@@ -2,17 +2,8 @@
     require_once '../../model/EstoqueModel.php.php';
     require '../header.php';
 
-    if($_SERVER['REQUEST_METHOD'] != 'POST') {
-        // Bad request
-        http_response_code(400);
-        
-        echo json_encode(array("message" => "Apenas POST."));
-        exit();
-    }
-    
     if(
-        empty($_POST['QTD_Movimento']) &&
-        empty($_POST['QTD'])
+        empty($_POST['id'])
     ) {
         // Bad request
         http_response_code(400);
@@ -20,14 +11,10 @@
         exit();
     }
 
-    $qtd_movimento_estoque = $_POST['qtd'];
-    $quantidade = $_POST['quantidade'];
+    $id = $_POST['id'];
+    $estoqueModel = new EstoqueModel();
 
-    $novoEstoque = new EstoqueModel();
-    $novoEstoque->setMovimentoEstoque($qtd_movimento_estoque);
-    $novoEstoque->setQuantidade($quantidade);
-
-    if($novoEstoque->cadastrar()){
+    if($estoqueModel->delete($id)){
         http_response_code(201);
         // tell the user
         echo json_encode(array("message" => "Estoque criado."));

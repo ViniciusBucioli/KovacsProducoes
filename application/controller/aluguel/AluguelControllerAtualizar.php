@@ -35,14 +35,14 @@ $novoAluguel->setCategoria($categoria);
 $novoAluguel->setPreco($preco);
 $novoAluguel->setDescricao($descricao);
 
-//Conexao
-require "db.php";
+// //Conexao
+// require "db.php";
 
-//SQL Command
-$sqlinsert = "INSERT INTO Aluguel (id_aluguel, data_aluguel, preco_aluguel_produto, desconto_aluguel_produto, preco_total_aluguel) VALUES (NULL , '$data_aluguel', '$preco_aluguel_produto', '$desconto_aluguel_produto', '$preco_total_aluguel')";
-$sqlinsert = "INSERT INTO Aluguel_Produto (id_produto, id_aluguel, desconto_aluguel_produto, preco_aluguel_produto) VALUES ('$id_produto', '$id_aluguel', '$desconto_aluguel_produto', '$preco_aluguel_produto')";
+// //SQL Command
+// $sqlinsert = "INSERT INTO Aluguel (id_aluguel, data_aluguel, preco_aluguel_produto, desconto_aluguel_produto, preco_total_aluguel) VALUES (NULL , '$data_aluguel', '$preco_aluguel_produto', '$desconto_aluguel_produto', '$preco_total_aluguel')";
+// $sqlinsert = "INSERT INTO Aluguel_Produto (id_produto, id_aluguel, desconto_aluguel_produto, preco_aluguel_produto) VALUES ('$id_produto', '$id_aluguel', '$desconto_aluguel_produto', '$preco_aluguel_produto')";
 
-//envio da query para o BD
-mysqli_query($connection, $sqlinsert)or die("Não foi possível registrar o aluguel fornecido!");
+// //envio da query para o BD
+// mysqli_query($connection, $sqlinsert)or die("Não foi possível registrar o aluguel fornecido!");
  
 ?>

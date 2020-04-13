@@ -25,8 +25,7 @@
         public function getEndereco() {return $this->endereco; }
 
         private $conn;
-        function __construct()
-        {
+        function __construct(){
             $db = new db();
             $this->conn = $db->connection;
         }
@@ -44,8 +43,41 @@
         }else {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             return $error;
+            }
         }
-    }
+
+        public function atualizar() {
+            if($query = $this->conn->prepare('UPDATE Cliente SET CPF = ?, nome = ?, email = ?, telefone = ?, endereco = ? WHERE id = ?')){
+                $query->bind_param('ssssss', $this->CPF, $this->nome, $this->email, $this->telefone, $this->endereco, $this->id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+        }
+
+        public function delete($id) {
+        
+            if($query = $this->conn->prepare('DELETE FROM Cliente WHERE id = ?')){
+                $query->bind_param('s', $id);
+                $result = $query->execute();
+                if($result)
+                    return true;
+                else
+                    return false;
+                $this->conn->close();
+            } else {
+                $error = $this->conn->errno . ' ' . $this->conn->error;
+                return $error;
+            }
+
+        }
+
         //testado e confirmado
         public function searchByCPF($word) {
             $word = '%'.$word.'%';
@@ -97,5 +129,4 @@
                 return $error;
             }
         }
-
     }

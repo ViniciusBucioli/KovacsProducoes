@@ -1,5 +1,5 @@
 <?php
-    require_once '../../model/ProdutoModel.php';
+    require_once '../../model/ServicoModel.php.php';
     require '../header.php';
     
     if(
@@ -7,14 +7,15 @@
     ) {
         // Bad request
         http_response_code(400);
+        
         echo json_encode(array("message" => "Dados incompletos."));
         exit();
     }
     
     $id = $_POST['id'];
-    $produtoModel = new ProdutoModel();
+    $servico = new ServicoModel();
 
-    if($produtoModel->delete($id)) {
+    if($servico->delete($id)) {
 
         // Produto criado
         http_response_code(200);

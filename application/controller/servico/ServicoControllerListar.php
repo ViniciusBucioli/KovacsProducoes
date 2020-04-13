@@ -1,15 +1,20 @@
 <?php
     require_once '../model/ServicoModel.php';
 
-    $nome = $_POST['Nome'];
-    $categoria = $_POST['Categoria'];
+    header("Access-Control-Allow-Origin: *");
+    // $nome = $_POST['Nome'];
+    // $categoria = $_POST['Categoria'];
+    $word = $_GET['word'];
 
-    $respostaModel = ServicoModel::selectAll();
-    $respostaModel = ServicoModel::selectByNome($nome);
-    $respostaModel = ServicoModel::selectByCategory($categoria);
+    // $respostaModel = ServicoModel::selectAll();
+    // $respostaModel = ServicoModel::selectByNome($nome);
+    // $respostaModel = ServicoModel::selectByCategory($categoria);
 
-    if($respostaModel == false)
-        header('');
+    $servicoModel = new ServicoModel();
+    $searchResult = $servicoModel->searchByNome($word);
+    if($searchResult == false)
+        // header('');
+        echo 'error';
     else
-        echo $respostaModel;
+        echo $searchResult;
 ?>

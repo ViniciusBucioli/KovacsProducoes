@@ -2,15 +2,8 @@
     require_once '../../model/FuncionarioModel.php';
     require '../header.php';
     
-    if($_SERVER['REQUEST_METHOD'] != 'POST') {
-        // Bad request
-        http_response_code(400);
-        
-        echo json_encode(array("message" => "Apenas POST."));
-        exit();
-    }
-    
     if(
+        empty($_POST['id']) ||
         empty($_POST['cpf']) ||
         empty($_POST['nome']) ||
         empty($_POST['cargo']) ||
@@ -28,7 +21,7 @@
         exit();
     }
 
-
+    $id = $_POST['id'];
     $CPF_funcionario = $_POST['cpf'];
     $nome_funcionario = $_POST['nome'];
     $cargo_funcionairo = $_POST['cargo'];
@@ -41,6 +34,7 @@
     $vendas_funcionario = $_POST['vendas'];
 
     $novoFuncionario = new FuncionarioModel();
+    $novoFuncionario->setId($id);
     $novoFuncionario->setCpf($CPF_funcionario);
     $novoFuncionario->setNome($nome_funcionario);
     $novoFuncionario->setCargo($cargo_funcionairo);
@@ -52,16 +46,16 @@
     $novoFuncionario->setComissao($comissao_funcionario);
     $novoFuncionario->setVendas($vendas_funcionario);
 
-    if($novoFuncionario->cadastrar()){
+    if($novoFuncionario->atualizar()){
         // Produto criado
         http_response_code(201);
         // tell the user
-        echo json_encode(array("message" => "Funcionario criado."));
+        echo json_encode(array("message" => "Funcionario atualizado."));
     }
     else{
         // set response code - 503 service unavailable
         http_response_code(503);
-        echo json_encode(array("message" => "Não foi possível cria o funcionario."));
+        echo json_encode(array("message" => "Não foi possível atualizar o funcionario."));
     }
         header('');
 ?>
