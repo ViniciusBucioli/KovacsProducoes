@@ -48,7 +48,7 @@
         
         public function atualizar() {
             if($query = $this->conn->prepare('UPDATE Produto SET nome = ?, categoria = ?, preco = ?, descricao = ? WHERE id = ?')){
-                $query->bind_param('ssss', $this->nome, $this->categoria, $this->preco, $this->descricao, $this->id);
+                $query->bind_param('sssss', $this->nome, $this->categoria, $this->preco, $this->descricao, $this->id);
                 $result = $query->execute();
                 if($result)
                     return true;

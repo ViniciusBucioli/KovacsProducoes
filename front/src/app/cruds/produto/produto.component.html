@@ -20,10 +20,10 @@
         </div>
     </div>
     <div class="form-row mt-4" *ngIf="newProduto">
-        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.nome" name="nome" /></div>
-        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.categoria" name="categoria" /></div>
-        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.preco" name="preco" /></div>
-        <div class="col"><input type="text" class="form-control" [(ngModel)]="newProduto.descricao" name="descricao" /></div>
+        <div class="col"><input placeholder="Nome" type="text" class="form-control" [(ngModel)]="newProduto.nome" name="nome" /></div>
+        <div class="col"><input placeholder="Categoria" type="text" class="form-control" [(ngModel)]="newProduto.categoria" name="categoria" /></div>
+        <div class="col"><input placeholder="Preço" type="text" class="form-control" [(ngModel)]="newProduto.preco" name="preco" /></div>
+        <div class="col"><input placeholder="Descrição" type="text" class="form-control" [(ngModel)]="newProduto.descricao" name="descricao" /></div>
         <div class="col"><button class="btn btn-primary" id="submit" type="button" (click)="insertProduto()">Salvar</button></div>
     </div>
     <div class="form-row" *ngIf="newProduto">

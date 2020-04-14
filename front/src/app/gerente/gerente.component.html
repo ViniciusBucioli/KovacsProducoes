@@ -15,16 +15,16 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <app-gerente-sidebar (menuChange)="menuChanged($event)" class="col-3 sidebar" id="sidebar"></app-gerente-sidebar>
-        <app-produto class="col-7 mt-4" *ngIf="menu.produtos == menuSelected"></app-produto>
-        <app-aluguel class="col-7 mt-4" *ngIf="menu.alugueis == menuSelected"></app-aluguel>
-        <app-cliente class="col-7 mt-4" *ngIf="menu.clientes == menuSelected"></app-cliente>
-        <app-estoque class="col-7 mt-4" *ngIf="menu.estoque == menuSelected"></app-estoque>
-        <app-funcionario class="col-7 mt-4" *ngIf="menu.funcionarios == menuSelected"></app-funcionario>
-        <!--<app-ponto class="col-7 mt-4" *ngIf="menu.ponto == menuSelected"></app-ponto>-->
-        <app-portifolio class="col-7 mt-4" *ngIf="menu.portifolio == menuSelected"></app-portifolio>
-        <app-servico class="col-7 mt-4" *ngIf="menu.servicos == menuSelected"></app-servico>
-        <app-venda class="col-7 mt-4" *ngIf="menu.vendas == menuSelected"></app-venda>
+        <app-gerente-sidebar (menuChange)="menuChanged($event)" class="col-2 sidebar" id="sidebar"></app-gerente-sidebar>
+        <app-produto class="col-8 mt-4" *ngIf="menu.produtos == menuSelected"></app-produto>
+        <app-aluguel class="col-8 mt-4" *ngIf="menu.alugueis == menuSelected"></app-aluguel>
+        <app-cliente class="col-8 mt-4" *ngIf="menu.clientes == menuSelected"></app-cliente>
+        <app-estoque class="col-8 mt-4" *ngIf="menu.estoque == menuSelected"></app-estoque>
+        <app-funcionario class="col-8 mt-4" *ngIf="menu.funcionarios == menuSelected"></app-funcionario>
+        <!--<app-ponto class="col-8 mt-4" *ngIf="menu.ponto == menuSelected"></app-ponto>-->
+        <app-portifolio class="col-8 mt-4" *ngIf="menu.portifolio == menuSelected"></app-portifolio>
+        <app-servico class="col-8 mt-4" *ngIf="menu.servicos == menuSelected"></app-servico>
+        <app-venda class="col-8 mt-4" *ngIf="menu.vendas == menuSelected"></app-venda>
         <div class="col-2"></div>
     </div>
 </div>

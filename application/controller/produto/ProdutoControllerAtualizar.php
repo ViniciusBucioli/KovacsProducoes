@@ -6,7 +6,7 @@
         empty($_POST['id']) ||
         empty($_POST['nome']) ||
         empty($_POST['categoria']) ||
-        empty($_POST['preco']) &&
+        empty($_POST['preco']) ||
         empty($_POST['descricao'])
     ) {
         // Bad request
@@ -38,19 +38,4 @@
         http_response_code(503);
         echo json_encode(array("message" => "Não foi possível atualizar o produto."));
     }
-
-    // if($_SERVER['REQUEST_METHOD'] != 'PUT') {
-    //     // Bad request
-    //     http_response_code(400);
-        
-    //     echo json_encode(array("message" => "Apenas PUT."));
-    //     exit();
-    // }
-    
-    //$_PUT = json_decode(file_get_contents('php://input'), true);
-    
-    
-    // foreach (getallheaders() as $header => $value) {
-    //     echo "$header: $value <br />\n";
-    // }
 ?>
