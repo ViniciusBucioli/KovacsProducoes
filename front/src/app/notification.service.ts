@@ -6,7 +6,7 @@ import { Toast, ToastModel } from '@syncfusion/ej2-notifications';
 })
 export class NotificationService {
 
-    public toastInstance: Toast;
+    private toastInstance: Toast;
     constructor() {}
 
     public popNotification(message: string) {

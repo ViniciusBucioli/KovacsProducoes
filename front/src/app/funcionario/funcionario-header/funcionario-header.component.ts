@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../login/login.service';
+import { Router } from '@angular/router';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-funcionario-header',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuncionarioHeaderComponent implements OnInit {
 
-  constructor() { }
+    constructor(
+        private loginService: LoginService,
+        private router: Router,
+        private notificationService: NotificationService
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    public logout(){
+        this.loginService.logout().subscribe(
+            () => {
+                this.router.navigateByUrl('/');
+            },
+            (e: any) => {
+                this.notificationService.popNotification(e.message);
+            }
+        );
+    }
 
 }

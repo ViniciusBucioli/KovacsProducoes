@@ -15,4 +15,8 @@ export class LoginService {
         return this.server.post(`http://localhost:5500/controller/session/login.php`, {email:email, pass: pass});
     }
 
+    public logout(): Observable<any> {
+        return this.server.get(`http://localhost:5500/controller/session/logout.php`);
+    }
+
 }

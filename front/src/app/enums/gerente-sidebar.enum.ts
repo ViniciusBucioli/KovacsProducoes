@@ -3,7 +3,7 @@ export enum GerenteSidebarEnum {
     estoque,
     portifolio,
     vendas,
-    akugueis,
+    alugueis,
     orcamentos,
     metas,
     servicos,

@@ -18,4 +18,8 @@ export class GerenteSidebarComponent implements OnInit {
     ngOnInit() {
     }
 
+    public test(){
+        this.selected = this.gerenteSidebarEnum.estoque; this.menuChange.emit(this.selected);
+    }
+
 }

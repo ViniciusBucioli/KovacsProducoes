@@ -6,10 +6,6 @@
     // $nome = $_POST['Nome'];
     $word = $_GET['word'];
 
-    // $respostaModel = ClienteModel::selectAll();
-    // $respostaModel = ClienteModel::selectByCPF($cpf);
-    // $respostaModel = ClienteModel::selectByName($nome);
-
     $clienteModel = new ClienteModel();
     $searchResult = $clienteModel->searchByName($word);
     if($searchResult == false)

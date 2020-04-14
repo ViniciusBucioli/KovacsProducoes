@@ -4,8 +4,28 @@
             id="navcol-1">
             <ul class="nav navbar-nav">
                 <li role="presentation" class="nav-item"><a class="nav-link active" href="#"><i class="fa fa-home fa-lg"></i></a></li>
-                <li role="presentation" class="nav-item"><a class="nav-link" href="#">Gestão</a></li>
-                <li role="presentation" class="nav-item"><a class="nav-link" href="#">Atividades<br /></a></li>
+                <li role="presentation" class="nav-item">
+                    <div class="dropdown">
+                        <a class="btn   nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Gestão
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" routerLink="/gestao/atendimento">Atendimento</a>
+                            <a class="dropdown-item" routerLink="/gestao/clientes">Clientes</a>
+                            <a class="dropdown-item" routerLink="/gestao/relatorios">Relatorios</a>
+                        </div>
+                    </div>
+                </li>
+                <li role="presentation" class="nav-item">    
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Atividades</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem>Action - 1</button>
+                        <button ngbDropdownItem>Another Action</button>
+                        <button ngbDropdownItem>Something else is here</button>
+                    </div>
+                  </div>
+                </li>
                 <li role="presentation" class="nav-item"><a class="nav-link" href="#">Portifólio<br /></a></li>
             </ul>
         </div>
@@ -15,3 +35,4 @@
         </ul>
     </div>
 </nav>
+

@@ -5,7 +5,7 @@ import { ProdutoComponent } from './cruds/produto/produto.component';
 import { GerenteComponent } from './gerente/gerente.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
-import { FuncionarioComponent } from './funcionario/funcionario.component';
+import { FuncionarioMenuComponent } from './funcionario/funcionario-menu.component';
 import { FuncionarioCalendarioComponent } from './funcionario/atividades/funcionario-calendario/funcionario-calendario.component';
 import { FuncionarioServicesComponent } from './funcionario/atividades/funcionario-services/funcionario-services.component';
 import { FuncionarioAtendimentoComponent } from './funcionario/gestao/funcionario-atendimento/funcionario-atendimento.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
         path:'funcionario',
         children:[{
             path: '',
-            component: FuncionarioComponent,
+            component: FuncionarioMenuComponent,
         },
         {
             path:'atividades',

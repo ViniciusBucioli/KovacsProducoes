@@ -8,11 +8,13 @@ import { GerenteSidebarEnum } from '../enums/gerente-sidebar.enum';
 })
 export class GerenteComponent implements OnInit {
 
-    public menuSelected: GerenteSidebarEnum = GerenteSidebarEnum.produtos;
+    public menuSelected: GerenteSidebarEnum;
+    public menu: typeof GerenteSidebarEnum = GerenteSidebarEnum;
 
     constructor() { }
 
     ngOnInit() {
+        this.menuSelected = this.menu.produtos;
     }
 
   public menuChanged(selected: GerenteSidebarEnum) {
