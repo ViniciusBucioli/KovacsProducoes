@@ -23,7 +23,7 @@ CREATE TABLE Cliente (
 -- Table: Estoque
 CREATE TABLE Estoque (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    qtd int NOT NULL, 
+    qtd int NOT NULL, --moviemtno
     quantidade int NOT NULL
 );
 
@@ -67,8 +67,8 @@ CREATE TABLE Ponto (
 -- Table: Portifolio
 CREATE TABLE Portifolio (
 	id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, 
-    arquivo BLOB NOT NULL, 
     nome TEXT (100) NOT NULL
+    arquivo BLOB NOT NULL, 
 );
 
 -- Table: Produto
@@ -85,11 +85,11 @@ insert into produto values (default, "Pano verde", "Estudio", 200, "Pano verde p
 -- Table: Servico
 CREATE TABLE Servico (
 	id int PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nome TEXT (100) NOT NULL
     oferecido_por int NOT NULL REFERENCES Funcionario (id),
     categoria TEXT (50) NOT NULL, 
     preco int NOT NULL, 
     descricao TEXT (200) NOT NULL, 
-    nome TEXT (100) NOT NULL
 );
 
 -- Table: Venda
