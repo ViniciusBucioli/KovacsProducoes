@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
     public login() {
         this.loginService.login(this.user.email, this.user.pass).subscribe(
             (response: any) => {
-                if (response.valid){
+                if (response.valid) {
                     this.router.navigateByUrl(response.path);
                 }
                 this.notification.popNotification(response.message);
-            }, 
+            },
             (e: any) => {
                 console.log(e);
                 if (e.error.text){

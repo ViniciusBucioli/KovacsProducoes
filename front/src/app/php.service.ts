@@ -28,10 +28,10 @@ export class PhpService {
         return this.httpClient.post(url,this.toHttp({"id": id}));
     }
 
-    
+
     public toHttp(obj: any) {
         let params = new HttpParams();
-        Object.keys(obj).forEach(function (item) {  
+        Object.keys(obj).forEach(function (item) {
             params = params.set(item, obj[item]);
         });
         return params;
